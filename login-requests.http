@@ -1,10 +1,37 @@
 
-### Basic get
-GET http://localhost/php_login_server/
+### Basic server get
+GET http://127.0.0.1/php_login_server/
 Accept: application/json
 ###
 
-GET http://localhost/php_login_server?login='root'&password='123'
+### Login with only one parameter
+GET http://127.0.0.1/php_login_server/login?login=%27123%27
 Accept: application/json
+###
+
+### Login with both parameters
+GET http://127.0.0.1/php_login_server/login?login='root'&password='123'
+Accept: application/json
+###
+
+### Register with full
+GET http://127.0.0.1/php_login_server/register?login=%27root%27&password=%27123%27&email=%27test@php.com%27&type=%27client%27
+Accept: application/json
+###
+
+
+POST http://127.0.0.1/php_login_server/add_task
+Content-Type: application/json
+
+{
+  "contractor_login": "root",
+  "task_info": [
+    { "task_name":  "task_1",
+      "task_desc":  "This is initial task",
+      "date":  "2021-03-19",
+      "status": "in_progress"
+    }
+  ]
+}
 
 ###
