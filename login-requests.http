@@ -1,0 +1,10 @@
+
+### Basic get
+GET http://localhost/php_login_server/
+Accept: application/json
+###
+
+GET http://localhost/php_login_server?login='root'&password='123'
+Accept: application/json
+
+###
