@@ -7,7 +7,8 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 
 require __DIR__ . '/../vendor/autoload.php';
-require(__DIR__ . '/../scripts/debugging.php');
+require __DIR__ . '/../scripts/debugging.php';
+require __DIR__ . '/../scripts/mysql_manager.php';
 
 // DEFINES
 define('DEBUG', 'true');
@@ -80,20 +81,17 @@ $app->post('/add_task', function (Request $request, Response $response){
     $contractor_login = $params['contractor_login'];
     $task_info = $params['task_info'];
 
-    function get_connection() {
-        $link = mysqli_connect("localhost", "root", "");
-        if ($link == false){
-            print("Could not open connection");
-        }else{
-            print("Connection was established");
-        }
-    }
+    if ($contractor_login == null || $task_info == null)
+        //TODO: maybe add status: 0
+        return $response;
+
+    $sql_link = try_mysql_connection();
+    if ($sql_link == false)
+        //TODO: maybe add status: 0
+        return $response;
 
 
-
-    get_connection();
-    console_log($contractor_login);
-    $response->getBody()->write($contractor_login);
+    //$sql_request = 'INSERT INTO users ()'
     return $response;
 });
 
