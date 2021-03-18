@@ -25,13 +25,14 @@ Content-Type: application/json
 
 {
   "login": "Ivan",
-  "task_info": [
-    { "task_name":  "task_1",
+  "task_info":
+    {
+      "contractor": "Petr",
+      "task_name":  "task_1",
       "task_desc":  "This is initial task",
       "date":  "2021-03-19",
       "status": "in_progress"
     }
-  ]
 }
 
 ###

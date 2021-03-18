@@ -75,14 +75,10 @@ $app->post('/create_task', function (Request $request, Response $response) use($
     if (!check_params($contractor_login, $task_info))
         return add_status($response, 0);
 
-    $user = $sql_manager->get_user($contractor_login);
-
-    if ($user == false){
-        print "Could not get user from DB";
-        return add_status($response, 0);
-    }
-
-    $response->getBody()->write($user['login']);
+    if ($sql_manager->create_task($contractor_login, $task_info) == false)
+        $response = add_status($response, 0);
+    else
+        $response = add_status($response, 1);
     return $response;
 });
 
