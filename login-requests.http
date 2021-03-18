@@ -20,11 +20,11 @@ Accept: application/json
 ###
 
 
-POST http://127.0.0.1/php_login_server/add_task
+POST http://127.0.0.1/php_login_server/create_task
 Content-Type: application/json
 
 {
-  "contractor_login": "root",
+  "login": "Ivan",
   "task_info": [
     { "task_name":  "task_1",
       "task_desc":  "This is initial task",
