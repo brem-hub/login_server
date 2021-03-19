@@ -15,9 +15,44 @@ class MySqlManager
         }
     }
 
+
+    function register_user($login, $password, $email, $type)
+    {
+        if ($this->link == false) {
+            print "Connection was not opened";
+            return false;
+        }
+
+        $query = 'INSERT INTO users (login, email, password, type, team) VALUES (?, ?, ?, ?, ?)';
+
+        $stmt = mysqli_stmt_init($this->link);
+
+        if (!mysqli_stmt_prepare($stmt, $query)) {
+            print "Failed to prepare statement\n";
+            return false;
+        }
+        $enum_val = ($type == 'customer') ? 0 : 1;
+        mysqli_stmt_bind_param($stmt, 'sssii',
+            $login,
+            $email,
+            $password,
+            $enum_val,
+            $team);
+        mysqli_stmt_execute($stmt);
+
+        $result = mysqli_stmt_get_result($stmt);
+
+
+        if ($result == false && $stmt->errno != 0) {
+            var_dump($stmt->error);
+            return false;
+        }
+
+        return true;
+    }
+
     function get_user($username)
     {
-
         if ($this->link == false) {
             print "Connection was not opened";
             return false;
@@ -75,7 +110,7 @@ class MySqlManager
 
 
         // team check
-        if ($contractor['team'] != $owner['team']){
+        if ($contractor['team'] != $owner['team']) {
             print "Contractor is from different team";
             return false;
         }
@@ -90,12 +125,12 @@ class MySqlManager
 
         mysqli_stmt_execute($stmt);
 
-        $results = mysqli_stmt_get_result($stmt);
+        $result = mysqli_stmt_get_result($stmt);
 
-        if ($results == false){
+        if ($result == false) {
             var_dump($stmt->error);
         }
 
-        return $results;
+        return $result;
     }
 }

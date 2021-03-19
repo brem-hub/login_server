@@ -20,48 +20,56 @@ $app->setBasePath('/php_login_server');
 $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();
 
-$app->get('/login', function (Request $request, Response $response) {
+$app->post('/login', function (Request $request, Response $response) use($sql_manager){
 
-    $args = $request->getQueryParams();
+    $args = (array)$request->getParsedBody();
+
     $login = $args['login'];
     $password = $args['password'];
 
     if (!check_params($login, $password)) {
-        $response->getBody()->write(json_encode(
-                array(
-                    'status' => 0)
-            )
-        );
-        return $response;
-    }
-
-    $response->getBody()->write(json_encode(
-        array(
-            'status' => 1
-        )
-    ));
-    return $response;
-});
-
-$app->get('/register', function (Request $request, Response $response) {
-
-    $args = $request->getQueryParams();
-    $login = $args['login'];
-    $password = $args['password'];
-    $email = $args['email'];
-    $user_type = $args['type'];
-
-    if (DEBUG) {
-        console_log('login ' . $login);
-        console_log('pas ' . $password);
-        console_log('email ' . $email);
-        console_log('type ' . $user_type);
-    }
-
-    if (!check_params($login, $password, $email, $user_type)) {
         return add_status($response, 0);
     }
 
+    $user = $sql_manager->get_user($login);
+
+    if ($user == false){
+        print "Could not extract user from db";
+        return add_status($response, 0);
+    }
+
+    $hash = $user['password'];
+
+    if (password_verify($password, $hash)){
+        return add_status($response, 1);
+    }
+
+    print "Password is incorrect";
+    return add_status($response, 0);
+});
+
+$app->post('/register', function (Request $request, Response $response) use($sql_manager){
+
+    $args = (array)$request->getParsedBody();
+
+    $login = $args['login'];
+    $password = $args['password'];
+    $email = $args['email'];
+    $user_type = $args['user_type'];
+
+
+    if (!check_params($login, $password, $email, $user_type)) {
+        print "Could not parse params";
+        return add_status($response, 0);
+    }
+
+    $hash = password_hash($password, PASSWORD_DEFAULT);
+
+    if($sql_manager->register_user($login, $hash, $email, $user_type) == false){
+        print "Could not register user";
+        return add_status($response, 0);
+    }
+    print "Successful";
     return add_status($response, 1);
 });
 
@@ -82,5 +90,9 @@ $app->post('/create_task', function (Request $request, Response $response) use($
     return $response;
 });
 
+/*$app->post('/create_group', function (Request $request, Response $response){
+
+
+});*/
 
 $app->run();
