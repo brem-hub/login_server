@@ -1,17 +1,17 @@
 
-### Login local
-POST http://127.0.0.1/php_login_server/login
+### Login server (beget)
+POST http://bremka.beget.tech/login
 Content-Type: application/json
 
 {
   "login": "Ivan",
-  "password": "1223"
+  "password": "123"
 }
 ###
 
 
-### Register new user local
-POST http://127.0.0.1/php_login_server/register
+### Register new customer user (beget)
+POST http://bremka.beget.tech/register
 Content-Type: application/json
 
 {
@@ -22,8 +22,8 @@ Content-Type: application/json
 }
 ###
 
-###
-POST http://127.0.0.1/php_login_server/register
+### Register new contractor user (beget)
+POST http://bremka.beget.tech/register
 Content-Type: application/json
 
 {
@@ -35,8 +35,8 @@ Content-Type: application/json
 ###
 
 
-### Create task
-POST http://127.0.0.1/php_login_server/create_task
+### Create new task (beget)
+POST http://bremka.beget.tech/create_task
 Content-Type: application/json
 
 {
@@ -49,10 +49,11 @@ Content-Type: application/json
     "status": "in_progress"
   }
 }
+###
 
 
-### Create team for customer.
-POST http://127.0.0.1/php_login_server/create_team
+### Create team for customer (beget)
+POST http://bremka.beget.tech/create_team
 Content-Type: application/json
 
 {
@@ -61,7 +62,9 @@ Content-Type: application/json
 }
 ###
 
-POST http://127.0.0.1/php_login_server/check_team
+
+### Check if user is in the team (beget)
+POST http://bremka.beget.tech/check_team
 Content-Type: application/json
 
 {
@@ -70,8 +73,9 @@ Content-Type: application/json
 }
 ###
 
-###
-POST http://127.0.0.1/php_login_server/get_tasks
+
+### Get tasks for chosen user (beget)
+POST http://bremka.beget.tech/get_tasks
 Content-Type: application/json
 
 {
@@ -79,8 +83,9 @@ Content-Type: application/json
 }
 ###
 
-###
-POST http://127.0.0.1/php_login_server/add_team
+
+### Add user to the team (beget)
+POST http://bremka.beget.tech/add_team
 Content-Type: application/json
 
 {
@@ -89,7 +94,9 @@ Content-Type: application/json
 }
 ###
 
-POST http://127.0.0.1/php_login_server/change_status
+
+### Change status of the task (beget)
+POST http://bremka.beget.tech/change_status
 Content-Type: application/json
 
 {

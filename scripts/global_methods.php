@@ -10,7 +10,7 @@ function check_params(...$params){
     return true;
 }
 
-function &add_status(Response $response, $status){
+function &add_json_status(Response $response, $status){
     $response->getBody()->write(json_encode(
         array(
             'status' => $status,
