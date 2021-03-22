@@ -44,7 +44,7 @@ Content-Type: application/json
   "task_info": {
     "contractor": "Petr",
     "task_name": "task_1",
-    "task_desc": "This is initial task",
+    "description": "This is initial task",
     "date": "2021-03-19",
     "status": "in_progress"
   }
